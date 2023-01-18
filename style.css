@@ -1,0 +1,17 @@
+:root{
+    --fonte-principal: 'Krona+One';
+}
+
+body {
+background-color: black;
+color:#F6F6F6;
+font-family: var(--fonte-principal), sans-serif;
+font-size: 16px;
+font-weight: 400;
+
+}
+
+strong {
+    color: #22D4FD
+}
+
