@@ -10,7 +10,7 @@ async function getBuscarTodosDocumentosDaAPI(){
     console.log(persons);
     
     persons.forEach(pessoa => {
-        listaPessoasDiv.innerHTML += `<h2>ID: ${pessoa.id}, Name: ${pessoa.Name}</h2>`;
+        listaPessoasDiv.innerHTML += `<h2>ID: ${pessoa.id}, Name: ${pessoa.name}</h2>`;
     });
     
 
