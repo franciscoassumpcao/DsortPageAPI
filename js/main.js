@@ -1,12 +1,9 @@
-import {personFunctions} from "./personScript.js"
+import {personFunctions} from "../js/personScript.js"
 
 const endpointDaAPI = 'https://dsortapi-apim.azure-api.net/api/Person/getAllPerson';
 personFunctions.GetAllPersons();
 const formularioCreateNewPerson = document.querySelector("[data-formularioNewPerson]");
 formularioCreateNewPerson.addEventListener("submit", evento => CriarPessoa (evento));
-
-
-
 
 async function CriarPessoa(evento){
     evento.preventDefault();   
