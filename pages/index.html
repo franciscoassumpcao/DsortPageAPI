@@ -5,6 +5,7 @@
         <meta name="viewport">
         <title>Doc Sort API</title>
         <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/estilos-form.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
@@ -25,31 +26,62 @@
             </div>
             <br>           
             <br>
-            <div name="personList">
+            <div name="personList" id="listaPessoas">
                 <h2>Person List</h2>
-                <div id="listaPessoas">
-              
                     <table>
                         <thead>
                             <tr>
                                 <td>Id</td>
                                 <td>Name</td>
                                 <td>N. Documents</td>
+                                <td>Delete</td>
                             </tr>
                         </thead>
                         <tbody id="tableListaPessoas">                      
                                                      
                         </tbody>
-                    </table>
+                    </table>                
+            </div>            
+            <br>
+           
+            
+            <form data-formularioNewPerson id="createNewPerson">
+                    <h2>Create a new Person</h2>
+                    <div class="formulario__campo">
+                        <label class="campo__etiqueta">Name</label>
+                        <input name="nome" class="formulario__campo" id="name" required placeholder="Person to Add" data-nomepessoa/>   
+                    </div>                    
+                    <input class="formulario__botao" type="submit"/>                                 
+            </form>           
 
 
-                </div>
+            <div id="documentList">
+
+                <h2>Document List</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Id</td>
+                            <td>Title</td>
+                            <td>N. Scans</td>
+                            <td>Persons</td>
+                            <td>Description</td>
+                            <td>Phisical Address</td>
+                        </tr>
+
+
+
+                    </thead>
+                    <tbody id="tableListaPessoas">                      
+                                                 
+                    </tbody>
+                </table>        
+
+
             </div>
         </main>
 
-
-
         <footer></footer>   
-        <script src="../js/main.js"></script>    
+        <script src="../js/main.js" type="module"></script>    
     </body>
 </html>   

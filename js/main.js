@@ -1,22 +1,22 @@
-let persons = []
+import {personFunctions} from "./personScript.js"
+
 const endpointDaAPI = 'https://dsortapi-apim.azure-api.net/api/Person/getAllPerson';
+personFunctions.GetAllPersons();
+const formularioCreateNewPerson = document.querySelector("[data-formularioNewPerson]");
+formularioCreateNewPerson.addEventListener("submit", evento => CriarPessoa (evento));
 
-getBuscarTodosDocumentosDaAPI();
-const listaPessoasDiv = document.getElementById('listaPessoas');
-const TablePessoas = document.getElementById('tableListaPessoas');
 
-async function getBuscarTodosDocumentosDaAPI(){
-    const conexaoAllPerson = await fetch(endpointDaAPI)
-    persons = await conexaoAllPerson.json();    
-    
-    persons.forEach(pessoa => {
-        //listaPessoasDiv.innerHTML += `<h2>ID: ${pessoa.id}, Name: ${pessoa.name}</h2>`;
-        TablePessoas.innerHTML += `
-        <tr>
-        <td>${pessoa.id}</td>
-        <td>${pessoa.name}</td>
-        <td>0</td>
-        </tr>
-        `
-    }); 
+
+
+async function CriarPessoa(evento){
+    evento.preventDefault();   
+    const nome = document.querySelector("[data-nomepessoa]").value;
+
+    try {
+    await personFunctions.PostNewPersonWithName(nome);
+    } catch(e) {
+        alert(e);
+    }    
 }
+
+
