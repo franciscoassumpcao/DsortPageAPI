@@ -1,4 +1,4 @@
-import {personFunctions} from "../js/personScript.js"
+import {personFunctions} from "./personScript.js"
 
 const endpointDaAPI = 'https://dsortapi-apim.azure-api.net/api/Person/getAllPerson';
 personFunctions.GetAllPersons();
