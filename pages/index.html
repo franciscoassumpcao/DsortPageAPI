@@ -4,35 +4,45 @@
         <meta charset="UTF-8">
         <meta name="viewport">
         <title>Doc Sort API</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="../css/style.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
     </head>
     <body>
-        <header>
-          
+        <header>          
         </header>
         <main>
             <h1>Documents Sort <strong>API</strong></h1>  
             <br>
             <div name="documentList">
                 <h2>Document List</h2>
-                <p>Web app to add, sort and organize your documents, virtually and phisically!!!</p>
-                <img src="image.png" alt="Photo programming" width="100px" height="150px">
+                <p>Web app to add, sort and organize your documents, virtually and phisically!!!</p>               
                 <br>
                 <a href="https://dsortapi.azurewebsites.net/api/Document/getAllDocuments">Get All Documents</a>
                 <a href="https://dsortapi.azurewebsites.net/api/Person/getAllPerson">Get All Persons</a>
             
             </div>
-            <br>
-           
+            <br>           
             <br>
             <div name="personList">
                 <h2>Person List</h2>
                 <div id="listaPessoas">
+              
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>Id</td>
+                                <td>Name</td>
+                                <td>N. Documents</td>
+                            </tr>
+                        </thead>
+                        <tbody id="tableListaPessoas">                      
+                                                     
+                        </tbody>
+                    </table>
 
-                    
+
                 </div>
             </div>
         </main>
@@ -40,6 +50,6 @@
 
 
         <footer></footer>   
-        <script src="js/main.js"></script>    
+        <script src="../js/main.js"></script>    
     </body>
 </html>   
