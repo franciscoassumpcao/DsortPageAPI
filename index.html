@@ -14,18 +14,9 @@
         <header>          
         </header>
         <main>
-            <h1>Documents Sort <strong>API</strong></h1>  
-            <br>
-            <div name="documentList">
-                <h2>Document List</h2>
-                <p>Web app to add, sort and organize your documents, virtually and phisically!!!</p>               
-                <br>
-                <a href="https://dsortapi.azurewebsites.net/api/Document/getAllDocuments">Get All Documents</a>
-                <a href="https://dsortapi.azurewebsites.net/api/Person/getAllPerson">Get All Persons</a>
-            
-            </div>
-            <br>           
-            <br>
+            <h1>Documents Sort <strong>API</strong></h1>                          
+            <p>Web app to add, sort and organize your documents, virtually and phisically!!!</p>                                                    
+            <hr>
             <div name="personList" id="listaPessoas">
                 <h2>Person List</h2>
                     <table>
@@ -44,19 +35,33 @@
             </div>            
             <br>
            
-            
-            <form data-formularioNewPerson id="createNewPerson">
+            <div class="containerGridTwo">
+
+            <form class="item-grid-1" data-formularioNewPerson id="createNewPerson">
                     <h2>Create a new Person</h2>
                     <div class="formulario__campo">
                         <label class="campo__etiqueta">Name</label>
                         <input name="nome" class="formulario__campo" id="name" required placeholder="Person to Add" data-nomepessoa/>   
                     </div>                    
                     <input class="formulario__botao" type="submit"/>                                 
-            </form>           
+            </form>    
+            
+                <form class="item-grid-2" data-formularioUpdatePerson id="updatePerson">
+                    <h2>Update Person</h2>
+                    <div class="formulario__campo">
+                        <label class="campo__etiqueta">Id</label>
+                        <input name="Id" class="formulario__campo" id="id" required placeholder="Id of the Person to Update" data-idpessoa/>   
+                        <br>
+                        <label class="campo__etiqueta">Name</label>
+                        <input name="nome" class="formulario__campo" id="name" required placeholder="New Name Person" data-nomepessoaupdate/>   
+                    </div>                    
+                    <input class="formulario__botao" type="submit"/>           
+                </form>
+            </div>
 
+            <hr>
 
             <div id="documentList">
-
                 <h2>Document List</h2>
                 <table>
                     <thead>
@@ -67,20 +72,36 @@
                             <td>Persons</td>
                             <td>Description</td>
                             <td>Phisical Address</td>
+                            <td>Delete</td>
                         </tr>
-
-
-
                     </thead>
-                    <tbody id="tableListaPessoas">                      
-                                                 
+                    <tbody id="tableListaDocumentos">                                                                       
                     </tbody>
                 </table>        
-
-
             </div>
-        </main>
 
+            <form data-formularioNewDoc id="createNewDoc">
+                <h2>Create a new Document</h2>
+                <div class="formulario__campo">
+                    <label class="campo__etiqueta">Title</label>
+                    <input name="nome" class="formulario__campo" id="title" required placeholder="Document Title" data-docTitle/>   
+                </div>     
+                <div class="formulario__campo">
+                    <label class="campo__etiqueta">Description</label>
+                    <input name="description" class="formulario__campo" id="description" required placeholder="Document Description" data-docDescription/>   
+                </div>      
+                <div class="formulario__campo">
+                    <label class="campo__etiqueta">Phisical Address</label>
+                    <input name="address" class="formulario__campo" id="address" required placeholder="Physical Address" data-docAddress/>   
+                </div>      
+                  
+                <input class="formulario__botao" type="submit"/>                                 
+        </form>       
+        <hr>
+
+
+
+        </main>
         <footer></footer>   
         <script src="js/main.js" type="module"></script>    
     </body>

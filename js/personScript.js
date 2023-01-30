@@ -3,7 +3,7 @@ const endPointPersons = {
     "GetAllPerson": "https://dsortapi-apim.azure-api.net/api/Person/getAllPerson",
     "DeletePersonId": "https://dsortapi-apim.azure-api.net/api/Person/deletePersonWithId/",
     "CreateNewPersonWithName": "https://dsortapi-apim.azure-api.net/api/Person/postNewPersonWithName/",
-    "UpdatePerson": "https://dsortapi-apim.azure-api.net/api/Person/deletePersonWithId/"
+    "UpdatePerson": "https://dsortapi-apim.azure-api.net/api/Person/UpdateNewPerson"
 }
 
 
@@ -65,13 +65,34 @@ async function DeletePerson(id){
 }
 
 
-async function getAllDeleteButtonPerson(){
+async function getAllDeleteButtonPerson(){    
     const buttonsDelete = await document.querySelectorAll("[data-btnDelete]");
-    buttonsDelete.forEach(function (btn) {
-        btn.addEventListener("click", () => DeletePerson(btn.id))})}
+    buttonsDelete.forEach(function (btn) {btn.addEventListener("click", () => DeletePerson(btn.id))})}
+
+
+async function UpdatePerson(id, newName){
+
+    const conexadoUpdatePerson = await fetch (endPointPersons.UpdatePerson,
+    {
+        method: "PUT",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            Id: id,
+            name: newName
+        })
+
+    });
+    if (!conexadoUpdatePerson.ok){
+        throw new Error("Not possible to update person");
+    }    
+    GetAllPersons();    
+}
 
 export const personFunctions = {
     GetAllPersons, 
     PostNewPersonWithName,
-    DeletePerson
+    DeletePerson,
+    UpdatePerson
 }
