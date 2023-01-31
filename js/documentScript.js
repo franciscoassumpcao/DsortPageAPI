@@ -20,25 +20,25 @@ async function GetAllDocumentos(){
 
 async function PostNewDocument(docTitle, docDescription, docAddress, file){    
     
-    let tempScanPath = "";
+    
+    let tempScanPath = (`https://dsortstorage.blob.core.windows.net/files/${file.files[0].name}`).toString();
 
     if (file.files.length>0){
-        await UploadScan(file);        
-        tempScanPath = `https://dsortstorage.blob.core.windows.net/files/${file.files[0].name}`;
-        console.log(tempScanPath);
+        await UploadScan(file);                
     }
 
+    console.log(tempScanPath);
     const conexadoNewDocument = await fetch (`${endPointDocuments.CreateNewDocument}`, 
-    {
+    {        
         method: "POST",        
         headers: {
             "Content-type": "application/json"
         },
         body: JSON.stringify({
             DocTitle: docTitle,
+            ScanPath: tempScanPath,
             Description: docDescription,
-            PhisicalAddress: docAddress,
-            ScanPath: tempScanPath
+            PhisicalAddress: docAddress
         })
     });
 
