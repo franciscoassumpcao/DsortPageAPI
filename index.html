@@ -9,12 +9,13 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/8a46efa823.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <header>          
         </header>
         <main>
-            <h1>Documents Sort <strong>API</strong></h1>                          
+            <h1>Documents Sort <strong>API</strong></h1>                            
             <p>Web app to add, sort and organize your documents, virtually and phisically!!!</p>                                                    
             <hr>
             <div name="personList" id="listaPessoas">
@@ -62,8 +63,7 @@
             <hr>
 
             <div id="documentList">
-                <h2>Document List</h2>
-
+                <h2>Document List</h2>                
                 <input name="nome" class="formulario__campo" id="docSearch" placeholder="Search Document..." data-searchDocument/> 
                 <button id="btn-searchDocument" data-btnsearchdocument type="click">Search</button> 
 
@@ -95,19 +95,26 @@
               
                     <label class="campo__etiqueta__gridOne">Phisical Address</label>
                     <input name="address" class="formulario__campo__gridTwo" id="address" required placeholder="Physical Address" data-docAddress/>   
-               
+
                     <label class="campo__etiqueta__gridOne">Upload Digital Document</label>
-                    <input type="file" name="file" class="formulario__campo__gridTwo" id="inpFile" placeholder="Digital Document" data-docScanPath/>   
-                
+                    <input type="file" name="file" class="formulario__campo__gridTwo" id="inpFile" placeholder="Digital Document" data-docScanPath/>  
+            </div>    
+            <div id="parent" data-checkboxesPersonParent>
+                   
             </div>
-                <input class="formulario__botao" type="submit"/>                                 
+    
+
+
+
+
+                <input class="formulario__botao" type="submit" />                                 
         </form>       
         <hr>
-
-
+  
 
         </main>
         <footer></footer>   
         <script src="js/main.js" type="module"></script>    
     </body>
 </html>   
+

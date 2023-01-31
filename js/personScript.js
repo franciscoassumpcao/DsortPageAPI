@@ -29,6 +29,7 @@ async function GetAllPersons(){
     }); 
 
     getAllDeleteButtonPerson();
+    populateNewDocCheckboxes();
 }
 
 async function PostNewPersonWithName(nome){    
@@ -45,7 +46,7 @@ async function PostNewPersonWithName(nome){
         throw new Error("Não foi possível criar pessoas");
     }
     const conexaoConvertida = await conexaoNewPerson.json();
-    GetAllPersons();
+    GetAllPersons();    
     return conexaoConvertida;
 }
 
@@ -62,6 +63,7 @@ async function DeletePerson(id){
         throw new Error("Não foi possível deletar pessoa com id");
     }    
     GetAllPersons();    
+    
 }
 
 
@@ -90,9 +92,28 @@ async function UpdatePerson(id, newName){
     GetAllPersons();    
 }
 
+async function populateNewDocCheckboxes(){
+
+const parentCheckboxes = document.querySelector("[data-checkboxesPersonParent]");
+console.log(parentCheckboxes);
+
+while (parentCheckboxes.firstChild){
+    parentCheckboxes.removeChild(parentCheckboxes.firstChild);
+}
+
+const conexao = await fetch(endPointPersons.GetAllPerson);
+const personsCurrent = await conexao.json();  
+
+await personsCurrent.forEach(pessoa => {
+    parentCheckboxes.innerHTML +=
+    `<div class="child"><input type="checkbox" id="${pessoa.id}">${pessoa.name} |</div>`
+})
+}
+
 export const personFunctions = {
     GetAllPersons, 
     PostNewPersonWithName,
     DeletePerson,
-    UpdatePerson
+    UpdatePerson,
+    populateNewDocCheckboxes
 }

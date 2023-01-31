@@ -102,8 +102,8 @@ async function fillingDocTable(documents){
         <td>${doc.persons[0]}</td>
         <td>${doc.description}</td>
         <td>${doc.phisicalAddress}</td>
-        <td>${doc.scanPath}</td>
-        <td><button type="click" id="${doc.id}" data-btnDeleteDoc>X</button></td>
+        <td><center><a class="fa-solid fa-download" href="${doc.scanPath}"></a></td>
+        <td><center><button type="click" id="${doc.id}" data-btnDeleteDoc>X</button></td>
         </tr>
         `
     }); 

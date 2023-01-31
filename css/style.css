@@ -58,12 +58,17 @@ table tbody tr:nth-child(odd) {
 
 .item-grid-3{
 	grid-column: 3;
+	
 }
-
-
 
 .containerGridThree {
 	display: grid; 
-	grid-template-columns: 1fr 1fr 1fr; 
-	gap: 0px 18px; 
+	grid-template-columns: 1fr 1fr 1fr; 	
+	gap: 0px 12px; 
   }
+
+  #parent { white-space: nowrap; }
+  
+.child { display: inline-block; }
+
+	
