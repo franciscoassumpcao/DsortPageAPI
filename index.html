@@ -63,12 +63,15 @@
 
             <div id="documentList">
                 <h2>Document List</h2>
+
+                <input name="nome" class="formulario__campo" id="docSearch" placeholder="Search Document..." data-searchDocument/> 
+                <button id="btn-searchDocument" data-btnsearchdocument type="click">Search</button> 
+
                 <table>
                     <thead>
                         <tr>
                             <td>Id</td>
-                            <td>Title</td>
-                            <td>N. Scans</td>
+                            <td>Title</td>                            
                             <td>Persons</td>
                             <td>Description</td>
                             <td>Phisical Address</td>
@@ -82,19 +85,20 @@
 
             <form data-formularioNewDoc id="createNewDoc">
                 <h2>Create a new Document</h2>
-                <div class="formulario__campo">
-                    <label class="campo__etiqueta">Title</label>
-                    <input name="nome" class="formulario__campo" id="title" required placeholder="Document Title" data-docTitle/>   
-                </div>     
-                <div class="formulario__campo">
-                    <label class="campo__etiqueta">Description</label>
-                    <input name="description" class="formulario__campo" id="description" required placeholder="Document Description" data-docDescription/>   
-                </div>      
-                <div class="formulario__campo">
-                    <label class="campo__etiqueta">Phisical Address</label>
-                    <input name="address" class="formulario__campo" id="address" required placeholder="Physical Address" data-docAddress/>   
-                </div>      
-                  
+            <div class="containerGridThree">                
+                    <label class="campo__etiqueta__gridOne">Title</label>
+                    <input name="nome" class="formulario__campo__gridTwo" id="title" required placeholder="Document Title" data-docTitle/>                      
+               
+                    <label class="campo__etiqueta__gridOne">Description</label>
+                    <input name="description" class="formulario__campo__gridTwo" id="description" required placeholder="Document Description" data-docDescription/>                   
+              
+                    <label class="campo__etiqueta__gridOne">Phisical Address</label>
+                    <input name="address" class="formulario__campo__gridTwo" id="address" required placeholder="Physical Address" data-docAddress/>   
+               
+                    <label class="campo__etiqueta__gridOne">Upload Digital Document</label>
+                    <input type="file" name="file" class="formulario__campo__gridTwo" id="inpFile" placeholder="Digital Document" data-docScanPath/>   
+                
+            </div>
                 <input class="formulario__botao" type="submit"/>                                 
         </form>       
         <hr>

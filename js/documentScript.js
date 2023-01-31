@@ -4,7 +4,8 @@ const endPointDocuments = {
     "DeleteDocumentID": "https://dsortapi-apim.azure-api.net/api/Document/deleteDocumentWithId/",
     "CreateNewDocument": "https://dsortapi-apim.azure-api.net/api/Document/createNewDocument",
     "UpdateDocument": "https://dsortapi-apim.azure-api.net/api/Document/updateNewDocument/",
-    "GetDocumentID": "https://dsortapi-apim.azure-api.net/api/Document/getDocumentWithId/"
+    "GetDocumentID": "https://dsortapi-apim.azure-api.net/api/Document/getDocumentWithId/",
+    "UploadScan":  "https://dsortapi-apim.azure-api.net/api/FileUpload/upload"
 }
 
 let documents = [];
@@ -21,8 +22,7 @@ async function GetAllDocumentos(){
         TableDocumentos.innerHTML += `
         <tr>
         <td>${doc.id}</td>
-        <td>${doc.docTitle}</td>
-        <td>${doc.scans.length}</td>
+        <td>${doc.docTitle}</td>        
         <td>${doc.persons[0]}</td>
         <td>${doc.description}</td>
         <td>${doc.phisicalAddress}</td>
@@ -34,7 +34,15 @@ async function GetAllDocumentos(){
     getAllDeleteButtonDoc();
 }
 
-async function PostNewDocument(docTitle, docDescription, docAddress){    
+async function PostNewDocument(docTitle, docDescription, docAddress, file){    
+    
+    let tempScanPath = "";
+
+    if (file.files.length>0){
+        await UploadScan(file);        
+        tempScanPath = `https://dsortstorage.blob.core.windows.net/files/${file.files[0].name}`;
+        console.log(tempScanPath);
+    }
 
     const conexadoNewDocument = await fetch (`${endPointDocuments.CreateNewDocument}`, 
     {
@@ -45,7 +53,8 @@ async function PostNewDocument(docTitle, docDescription, docAddress){
         body: JSON.stringify({
             DocTitle: docTitle,
             Description: docDescription,
-            PhisicalAddress: docAddress
+            PhisicalAddress: docAddress,
+            ScanPath: tempScanPath
         })
     });
 
@@ -77,10 +86,66 @@ async function getAllDeleteButtonDoc(){
             GetAllDocumentos();  
         }
         
+async function UploadScan(file){
+
+    const formData = new FormData();
+    formData.append("file", file.files[0]);
+
+    try{
+    const conexadoUploadScan = await fetch (endPointDocuments.UploadScan,{
+        method: "POST",        
+        body: formData
+        })
+    } catch (e){
+        console.error(e);
+    }
+}
+   
+
+async function SearchDocument(term){
+
+    // Get All Documents from DB
+    const conexaoAllDocuments = await fetch(endPointDocuments.GetAllDocuments);
+    documents = await conexaoAllDocuments.json();   
+
+    // Declare new empty array of Documents relevant to the term searched
+    let documentsRelevant = [];
+
+    // Include relevant terms in the array
+    documents.forEach(doc => {
+        if (doc.description.toLowerCase().includes(term.toLowerCase()) || doc.docTitle.toLowerCase().includes(term.toLowerCase) || term==""){
+            documentsRelevant.push(doc);}
+    })
+
+    // clear the current table of documents    
+    while (TableDocumentos.firstChild){
+        TableDocumentos.removeChild(TableDocumentos.firstChild);
+    }
+    
+    //add relevant documents to the table display
+    if (documentsRelevant.length >0) {
+    documentsRelevant.forEach(doc => {        
+        TableDocumentos.innerHTML += `
+        <tr>
+        <td>${doc.id}</td>
+        <td>${doc.docTitle}</td>        
+        <td>${doc.persons[0]}</td>
+        <td>${doc.description}</td>
+        <td>${doc.phisicalAddress}</td>
+        <td><button type="click" id="${doc.id}" data-btnDeleteDoc>X</button></td>
+        </tr>
+        `
+    }); 
+    
+    getAllDeleteButtonDoc();
+    }
+
+}
 
         
 export const docFunctions = {
     GetAllDocumentos,
     PostNewDocument,
-    DeleteDoc    
+    DeleteDoc,
+    SearchDocument    
 }

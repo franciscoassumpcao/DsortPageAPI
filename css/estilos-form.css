@@ -19,6 +19,12 @@
     font-size: 1em;
 }
 
+.formulario__campo__gridTwo {
+    margin: 0.3em;
+    font-size: 1em;
+    grid-column: 2;
+}
+
 .formulario__titulo {
     color: var(--azul-medio);
     font-weight: bold;
@@ -38,6 +44,14 @@
     padding: 0 0 .1em 1em;
     font-weight: 700;
     color: var(--azul-medio);
+}
+
+.campo__etiqueta__gridOne {
+    line-height: 1.5;
+    padding: 0 0 .1em 1em;
+    font-weight: 700;
+    color: var(--azul-medio);
+    grid-column: 1;
 }
 
 .formulario__botao {

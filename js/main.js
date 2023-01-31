@@ -4,14 +4,11 @@ import {docFunctions} from "./documentScript.js"
 personFunctions.GetAllPersons();
 docFunctions.GetAllDocumentos();
 
-const formularioCreateNewPerson = document.querySelector("[data-formularioNewPerson]");
-formularioCreateNewPerson.addEventListener("submit", evento => CriarPessoa (evento));
+const formularioCreateNewPerson = document.querySelector("[data-formularioNewPerson]").addEventListener("submit", evento => CriarPessoa (evento));
+const formularioCreateNewDocument = document.querySelector("[data-formularioNewDoc]").addEventListener("submit", evento => CriarDocumento (evento));
+const formularioUpdatePerson = document.querySelector("[data-formularioUpdatePerson]").addEventListener("submit", evento => UpdatePerson(evento));
+const searchDocumentButton = document.querySelector("[data-btnsearchdocument]").addEventListener("click", evento => BuscarDoc(evento));
 
-const formularioCreateNewDocument = document.querySelector("[data-formularioNewDoc]");
-formularioCreateNewDocument.addEventListener("submit", evento => CriarDocumento (evento));
-
-const formularioUpdatePerson = document.querySelector("[data-formularioUpdatePerson]");
-formularioUpdatePerson.addEventListener("submit", evento => UpdatePerson(evento));
 
 
 async function CriarPessoa(evento){
@@ -43,12 +40,24 @@ async function CriarDocumento(evento){
     const Title = document.querySelector("[data-docTitle]").value;
     const Description = document.querySelector("[data-docDescription]").value;
     const Address = document.querySelector("[data-docAddress]").value;
+    const FileField = document.querySelector("[data-docScanPath]");    
 
     try {
-    await docFunctions.PostNewDocument(Title,Description,Address);
+    await docFunctions.PostNewDocument(Title,Description,Address, FileField);
     } catch(e) {
         alert(e);
     }    
 }
 
+async function BuscarDoc(evento){
+    evento.preventDefault();   
+    const termSearched = document.querySelector("[data-searchDocument]").value;
+
+    try {
+        await docFunctions.SearchDocument(termSearched);
+    } catch (e) {
+        console.log(`Error encontered ${e}, not possible to search for documents`);
+    }
+
+}
 
