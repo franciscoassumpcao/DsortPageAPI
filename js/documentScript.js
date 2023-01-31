@@ -14,24 +14,8 @@ async function GetAllDocumentos(){
     const conexaoAllDocuments = await fetch(endPointDocuments.GetAllDocuments);
     documents = await conexaoAllDocuments.json();   
     
-    while (TableDocumentos.firstChild){
-        TableDocumentos.removeChild(TableDocumentos.firstChild);
-    }
-    
-    documents.forEach(doc => {        
-        TableDocumentos.innerHTML += `
-        <tr>
-        <td>${doc.id}</td>
-        <td>${doc.docTitle}</td>        
-        <td>${doc.persons[0]}</td>
-        <td>${doc.description}</td>
-        <td>${doc.phisicalAddress}</td>
-        <td><button type="click" id="${doc.id}" data-btnDeleteDoc>X</button></td>
-        </tr>
-        `
-    }); 
-
-    getAllDeleteButtonDoc();
+    fillingDocTable(documents);
+   
 }
 
 async function PostNewDocument(docTitle, docDescription, docAddress, file){    
@@ -102,29 +86,15 @@ async function UploadScan(file){
 }
    
 
-async function SearchDocument(term){
+async function fillingDocTable(documents){
 
-    // Get All Documents from DB
-    const conexaoAllDocuments = await fetch(endPointDocuments.GetAllDocuments);
-    documents = await conexaoAllDocuments.json();   
+    if (documents.length==0) return;
 
-    // Declare new empty array of Documents relevant to the term searched
-    let documentsRelevant = [];
-
-    // Include relevant terms in the array
-    documents.forEach(doc => {
-        if (doc.description.toLowerCase().includes(term.toLowerCase()) || doc.docTitle.toLowerCase().includes(term.toLowerCase) || term==""){
-            documentsRelevant.push(doc);}
-    })
-
-    // clear the current table of documents    
     while (TableDocumentos.firstChild){
         TableDocumentos.removeChild(TableDocumentos.firstChild);
     }
     
-    //add relevant documents to the table display
-    if (documentsRelevant.length >0) {
-    documentsRelevant.forEach(doc => {        
+    documents.forEach(doc => {        
         TableDocumentos.innerHTML += `
         <tr>
         <td>${doc.id}</td>
@@ -132,14 +102,32 @@ async function SearchDocument(term){
         <td>${doc.persons[0]}</td>
         <td>${doc.description}</td>
         <td>${doc.phisicalAddress}</td>
+        <td>${doc.scanPath}</td>
         <td><button type="click" id="${doc.id}" data-btnDeleteDoc>X</button></td>
         </tr>
         `
     }); 
-    
-    getAllDeleteButtonDoc();
-    }
 
+    getAllDeleteButtonDoc();
+}
+
+async function SearchDocument(term){
+
+    // Get All Documents from DB
+    const conexaoAllDocuments = await fetch(endPointDocuments.GetAllDocuments);
+    documents = await conexaoAllDocuments.json();   
+
+    // Declare new empty array of Documents relevant to the term searched
+    let documentsRelevant = [];    
+
+    // Include relevant terms in the array
+    documents.forEach(doc => {     
+        if (term ==="" || doc.docTitle.toLowerCase().includes(term.toLowerCase()) || doc.description.toLowerCase().includes(term.toLowerCase()) ){
+            documentsRelevant.push(doc);                   
+        }
+    })
+
+    fillingDocTable(documentsRelevant);
 }
 
         
@@ -149,3 +137,4 @@ export const docFunctions = {
     DeleteDoc,
     SearchDocument    
 }
+
