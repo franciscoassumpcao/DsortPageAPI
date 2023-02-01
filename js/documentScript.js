@@ -11,6 +11,7 @@ const endPointDocuments = {
 
 let documents = [];
 var latestDocumentCreatedId = 0;
+var latestPersonSelectedId = 0;
 
 async function GetAllDocumentos(){
     const conexaoAllDocuments = await fetch(endPointDocuments.GetAllDocuments);
@@ -18,6 +19,10 @@ async function GetAllDocumentos(){
     
     fillingDocTable(documents);
    
+}
+
+function UpdateLatestPersonSelectedId(id){
+    latestPersonSelectedId = id;
 }
 
 async function PostNewDocument(docTitle, docDescription, docAddress, file){    
@@ -28,8 +33,7 @@ async function PostNewDocument(docTitle, docDescription, docAddress, file){
     if (file.files.length>0){
         await UploadScan(file);                
     }
-
-    console.log(tempScanPath);
+    
     const conexadoNewDocument = await fetch (`${endPointDocuments.CreateNewDocument}`, 
     {        
         method: "POST",        
@@ -42,24 +46,27 @@ async function PostNewDocument(docTitle, docDescription, docAddress, file){
             Description: docDescription,
             PhisicalAddress: docAddress
         })
-    }).then(response => {
-        console.log(response);
     });
-
 
     if (!conexadoNewDocument.ok){
         throw new Error("Não foi possível criar um novo documento");
-    }
-    const conexaoConvertida = await conexadoNewDocument.json();
-    
-    GetAllDocumentos();
+    }    
+
+    else {
+        const resonseDocJson = await conexadoNewDocument.json();  
+        latestDocumentCreatedId = resonseDocJson.id;
+
+        AddPersonToDocument(latestDocumentCreatedId,latestPersonSelectedId);
+        GetAllDocumentos();
+    }    
     
 }
 
 async function getAllDeleteButtonDoc(){
     const buttonsDelete = await document.querySelectorAll("[data-btnDeleteDoc]");
     buttonsDelete.forEach(function (btn) {
-        btn.addEventListener("click", () => DeleteDoc(btn.id))})}
+        btn.addEventListener("click", () => DeleteDoc(btn.id))})
+    }
 
  async function DeleteDoc(id){
             const conexadoDeleteDocument = await fetch (`${endPointDocuments.DeleteDocumentID}${id}`,
@@ -105,7 +112,7 @@ async function fillingDocTable(documents){
         <tr>
         <td>${doc.id}</td>
         <td>${doc.docTitle}</td>        
-        <td>${doc.persons[0]}</td>
+        <td>${doc.persons[0].name}</td>
         <td>${doc.description}</td>
         <td>${doc.phisicalAddress}</td>
         <td><center><a class="fa-solid fa-download" href="${doc.scanPath}"></a></td>
@@ -138,9 +145,15 @@ async function SearchDocument(term){
 
 async function AddPersonToDocument(idDoc, idPerson){
 
-    if (idPerson == 0 ) return;
+    if (idPerson == 0 || idDoc == 0 ) return;
 
-    const conexadoPersonToDoc = await fetch (`${endPointDocuments.AddPersonToDocument}`, 
+    console.log(`
+    trying to add person to doc with ids
+    doc id: ${idDoc},
+    person id: ${idPerson}
+    `);
+
+    const conexadoPersonToDoc = await fetch (endPointDocuments.AddPersonToDoc, 
     {        
         method: "POST",        
         headers: {
@@ -162,6 +175,7 @@ export const docFunctions = {
     PostNewDocument,
     DeleteDoc,
     SearchDocument,
-    AddPersonToDocument 
+    AddPersonToDocument,
+    UpdateLatestPersonSelectedId
 }
 

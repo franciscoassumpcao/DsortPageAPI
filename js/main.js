@@ -8,7 +8,7 @@ const formularioCreateNewPerson = document.querySelector("[data-formularioNewPer
 const formularioCreateNewDocument = document.querySelector("[data-formularioNewDoc]").addEventListener("submit", evento => CriarDocumento (evento));
 const formularioUpdatePerson = document.querySelector("[data-formularioUpdatePerson]").addEventListener("submit", evento => UpdatePerson(evento));
 const searchDocumentButton = document.querySelector("[data-btnsearchdocument]").addEventListener("click", evento => BuscarDoc(evento));
-var idPersonSelected = 0;
+
 
 
 async function CriarPessoa(evento){
@@ -58,14 +58,13 @@ async function GetPersonSelectedInForm(){
     if (radiosPersons.length>0) {        
         radiosPersons.forEach(radio => {
             if (radio.checked) {                
-                console.log(`radio id is ${radio.id}`);                
-                idPersonSelected = radio.id;
+                docFunctions.UpdateLatestPersonSelectedId(radio.id);
                 return; 
             }
         })
     }
         else { 
-            idPersonSelected = 0;
+            docFunctions.UpdateLatestPersonSelectedId(0);
         }
 }
 
