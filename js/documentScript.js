@@ -5,10 +5,12 @@ const endPointDocuments = {
     "CreateNewDocument": "https://dsortapi-apim.azure-api.net/api/Document/createNewDocument",
     "UpdateDocument": "https://dsortapi-apim.azure-api.net/api/Document/updateNewDocument/",
     "GetDocumentID": "https://dsortapi-apim.azure-api.net/api/Document/getDocumentWithId/",
-    "UploadScan":  "https://dsortapi-apim.azure-api.net/api/FileUpload/upload"
+    "UploadScan":  "https://dsortapi-apim.azure-api.net/api/FileUpload/upload",
+    "AddPersonToDoc": "https://dsortapi-apim.azure-api.net/api/Person/personDocument"
 }
 
 let documents = [];
+var latestDocumentCreatedId = 0;
 
 async function GetAllDocumentos(){
     const conexaoAllDocuments = await fetch(endPointDocuments.GetAllDocuments);
@@ -40,12 +42,16 @@ async function PostNewDocument(docTitle, docDescription, docAddress, file){
             Description: docDescription,
             PhisicalAddress: docAddress
         })
+    }).then(response => {
+        console.log(response);
     });
+
 
     if (!conexadoNewDocument.ok){
         throw new Error("Não foi possível criar um novo documento");
     }
     const conexaoConvertida = await conexadoNewDocument.json();
+    
     GetAllDocumentos();
     
 }
@@ -130,11 +136,32 @@ async function SearchDocument(term){
     fillingDocTable(documentsRelevant);
 }
 
+async function AddPersonToDocument(idDoc, idPerson){
+
+    if (idPerson == 0 ) return;
+
+    const conexadoPersonToDoc = await fetch (`${endPointDocuments.AddPersonToDocument}`, 
+    {        
+        method: "POST",        
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            documentId: idDoc,
+            personId: idPerson
+        })
+    });
+
+    if (!conexadoPersonToDoc.ok){
+        throw new Error("Not able to add person to doc");
+    }
+}
         
 export const docFunctions = {
     GetAllDocumentos,
     PostNewDocument,
     DeleteDoc,
-    SearchDocument    
+    SearchDocument,
+    AddPersonToDocument 
 }
 

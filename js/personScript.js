@@ -95,7 +95,6 @@ async function UpdatePerson(id, newName){
 async function populateNewDocCheckboxes(){
 
 const parentCheckboxes = document.querySelector("[data-checkboxesPersonParent]");
-console.log(parentCheckboxes);
 
 while (parentCheckboxes.firstChild){
     parentCheckboxes.removeChild(parentCheckboxes.firstChild);
@@ -106,7 +105,7 @@ const personsCurrent = await conexao.json();
 
 await personsCurrent.forEach(pessoa => {
     parentCheckboxes.innerHTML +=
-    `<div class="child"><input type="checkbox" id="${pessoa.id}">${pessoa.name} |</div>`
+    `<div class="child"><input type="radio" name="checkBoxNames" id="${pessoa.id}">${pessoa.name} |</div>`
 })
 }
 

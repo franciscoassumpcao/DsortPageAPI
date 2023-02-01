@@ -8,7 +8,7 @@ const formularioCreateNewPerson = document.querySelector("[data-formularioNewPer
 const formularioCreateNewDocument = document.querySelector("[data-formularioNewDoc]").addEventListener("submit", evento => CriarDocumento (evento));
 const formularioUpdatePerson = document.querySelector("[data-formularioUpdatePerson]").addEventListener("submit", evento => UpdatePerson(evento));
 const searchDocumentButton = document.querySelector("[data-btnsearchdocument]").addEventListener("click", evento => BuscarDoc(evento));
-
+var idPersonSelected = 0;
 
 
 async function CriarPessoa(evento){
@@ -40,14 +40,35 @@ async function CriarDocumento(evento){
     const Title = document.querySelector("[data-docTitle]").value;
     const Description = document.querySelector("[data-docDescription]").value;
     const Address = document.querySelector("[data-docAddress]").value;
-    const FileField = document.querySelector("[data-docScanPath]");    
+    const FileField = document.querySelector("[data-docScanPath]");          
+    await GetPersonSelectedInForm();
 
     try {
-    await docFunctions.PostNewDocument(Title,Description,Address, FileField);
+    await docFunctions.PostNewDocument(Title,Description,Address, FileField);        
+
     } catch(e) {
         alert(e);
     }    
 }
+
+async function GetPersonSelectedInForm(){
+
+    let radiosPersons = document.querySelectorAll('input[name="checkBoxNames"]');
+
+    if (radiosPersons.length>0) {        
+        radiosPersons.forEach(radio => {
+            if (radio.checked) {                
+                console.log(`radio id is ${radio.id}`);                
+                idPersonSelected = radio.id;
+                return; 
+            }
+        })
+    }
+        else { 
+            idPersonSelected = 0;
+        }
+}
+
 
 async function BuscarDoc(evento){
     evento.preventDefault();   
