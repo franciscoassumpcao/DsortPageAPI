@@ -111,7 +111,10 @@ async function fillingDocTable(documents){
     
     documents.forEach(doc => {    
         
-        if (doc.persons) personName = doc.persons[0].name;
+        if (doc.persons.length >0) 
+        {
+            personName = doc.persons[0].name;
+        }
 
         TableDocumentos.innerHTML += `
         <tr>
