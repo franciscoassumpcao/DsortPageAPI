@@ -146,6 +146,11 @@ async function SearchDocument(term){
         if (term ==="" || doc.docTitle.toLowerCase().includes(term.toLowerCase()) || doc.description.toLowerCase().includes(term.toLowerCase()) ){
             documentsRelevant.push(doc);                   
         }
+        else if (doc.persons.length>0) {
+            if (doc.persons[0].name.toLowerCase().includes(term.toLowerCase())) {
+                documentsRelevant.push(doc); 
+            }
+        }
     })
 
     fillingDocTable(documentsRelevant);
