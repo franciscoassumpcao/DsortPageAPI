@@ -106,13 +106,18 @@ async function fillingDocTable(documents){
     while (TableDocumentos.firstChild){
         TableDocumentos.removeChild(TableDocumentos.firstChild);
     }
+
+    let personName = "";
     
-    documents.forEach(doc => {        
+    documents.forEach(doc => {    
+        
+        if (doc.persons) personName = doc.persons[0].name;
+
         TableDocumentos.innerHTML += `
         <tr>
         <td>${doc.id}</td>
         <td>${doc.docTitle}</td>        
-        <td>${doc.persons[0].name}</td>
+        <td>${personName}</td>
         <td>${doc.description}</td>
         <td>${doc.phisicalAddress}</td>
         <td><center><a class="fa-solid fa-download" href="${doc.scanPath}"></a></td>
