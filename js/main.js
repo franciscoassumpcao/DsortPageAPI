@@ -36,8 +36,7 @@ async function UpdatePerson(evento){
 async function CriarDocumento(evento){
     evento.preventDefault();   
     const Title = document.querySelector("[data-docTitle]").value;
-    const Description = document.querySelector("[data-docDescription]").value;
-    const Address = document.querySelector("[data-docAddress]").value;
+    const Description = document.querySelector("[data-docDescription]").value;    
     const FileField = document.querySelector("[data-docScanPath]");          
     await GetCategorySelectedInForm();
 
