@@ -45,8 +45,18 @@ async function CriarDocumento(evento){
 
     } catch(e) {
         alert(e);
-    }    
+    } finally {
+        const TitleField = document.querySelector("[data-docTitle]");
+        const DescriptionField = document.querySelector("[data-docDescription]");
+        const FileField2 = document.querySelector("[data-docScanPath]");       
+
+        TitleField.value = "";
+        DescriptionField.value = "";
+        FileField2.value = "";
+    }
 }
+
+
 
 async function GetCategorySelectedInForm(){
 
