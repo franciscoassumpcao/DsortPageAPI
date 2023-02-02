@@ -9,8 +9,6 @@ const formularioCreateNewDocument = document.querySelector("[data-formularioNewD
 const formularioUpdatePerson = document.querySelector("[data-formularioUpdatePerson]").addEventListener("submit", evento => UpdatePerson(evento));
 const searchDocumentButton = document.querySelector("[data-btnsearchdocument]").addEventListener("click", evento => BuscarDoc(evento));
 
-
-
 async function CriarPessoa(evento){
     evento.preventDefault();   
     const nome = document.querySelector("[data-nomepessoa]").value;
@@ -61,13 +59,17 @@ async function GetPersonSelectedInForm(){
                 docFunctions.UpdateLatestPersonSelectedId(radio.id);
                 return; 
             }
+            else {
+                docFunctions.UpdateLatestPersonSelectedId(0);
+                return;
+            }
         })
     }
         else { 
             docFunctions.UpdateLatestPersonSelectedId(0);
+            return;
         }
 }
-
 
 async function BuscarDoc(evento){
     evento.preventDefault();   

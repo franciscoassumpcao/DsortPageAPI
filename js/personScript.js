@@ -13,9 +13,7 @@ async function GetAllPersons(){
     const conexaoAllPerson = await fetch(endPointPersons.GetAllPerson);
     persons = await conexaoAllPerson.json();   
     
-    while (TablePessoas.firstChild){
-        TablePessoas.removeChild(TablePessoas.firstChild);
-    }
+    while (TablePessoas.firstChild){ TablePessoas.removeChild(TablePessoas.firstChild); }
     
     persons.forEach(pessoa => {        
         TablePessoas.innerHTML += `
@@ -24,8 +22,7 @@ async function GetAllPersons(){
         <td>${pessoa.name}</td>
         <td>0</td>
         <td><button type="click" id="${pessoa.id}" data-btnDelete>X</button></td>
-        </tr>
-        `
+        </tr>`
     }); 
 
     getAllDeleteButtonPerson();
@@ -37,14 +34,11 @@ async function PostNewPersonWithName(nome){
     const conexaoNewPerson = await fetch (`${endPointPersons.CreateNewPersonWithName}${nome}`, 
     {
         method: "POST",
-        headers: {
-            "Content-type": "application/json"
-        }
+        headers: { "Content-type": "application/json" }
     });
 
-    if (!conexaoNewPerson.ok){
-        throw new Error("Não foi possível criar pessoas");
-    }
+    if (!conexaoNewPerson.ok) throw new Error("Not possible to create a new Person");
+    
     const conexaoConvertida = await conexaoNewPerson.json();
     GetAllPersons();    
     return conexaoConvertida;
@@ -59,9 +53,8 @@ async function DeletePerson(id){
             accept: "application/json"
         }
     });
-    if (!conexadoDeletePerson.ok){
-        throw new Error("Não foi possível deletar pessoa com id");
-    }    
+    if (!conexadoDeletePerson.ok) throw new Error("Não foi possível deletar pessoa com id");
+    
     GetAllPersons();    
     
 }
@@ -86,9 +79,8 @@ async function UpdatePerson(id, newName){
         })
 
     });
-    if (!conexadoUpdatePerson.ok){
-        throw new Error("Not possible to update person");
-    }    
+    if (!conexadoUpdatePerson.ok) throw new Error("Not possible to update person");
+
     GetAllPersons();    
 }
 

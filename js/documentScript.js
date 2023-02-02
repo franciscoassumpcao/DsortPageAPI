@@ -21,16 +21,14 @@ async function GetAllDocumentos(){
    
 }
 
-function UpdateLatestPersonSelectedId(id){
-    latestPersonSelectedId = id;
-}
+function UpdateLatestPersonSelectedId(id) {latestPersonSelectedId = id; }
 
-async function PostNewDocument(docTitle, docDescription, docAddress, file){    
+async function PostNewDocument(docTitle, docDescription, docAddress, file){        
     
-    
-    let tempScanPath = (`https://dsortstorage.blob.core.windows.net/files/${file.files[0].name}`).toString();
+    let tempScanPath = "";
 
-    if (file.files.length>0){
+    if (file.files.length>0) {
+        tempScanPath = (`https://dsortstorage.blob.core.windows.net/files/${file.files[0].name}`).toString();
         await UploadScan(file);                
     }
     
@@ -48,13 +46,11 @@ async function PostNewDocument(docTitle, docDescription, docAddress, file){
         })
     });
 
-    if (!conexadoNewDocument.ok){
-        throw new Error("Não foi possível criar um novo documento");
-    }    
+    if (!conexadoNewDocument.ok) throw new Error("Não foi possível criar um novo documento");
 
     else {
         const resonseDocJson = await conexadoNewDocument.json();  
-        latestDocumentCreatedId = resonseDocJson.id;
+        latestDocumentCreatedId = resonseDocJson.id;        
 
         AddPersonToDocument(latestDocumentCreatedId,latestPersonSelectedId);
         GetAllDocumentos();
@@ -103,18 +99,12 @@ async function fillingDocTable(documents){
 
     if (documents.length==0) return;
 
-    while (TableDocumentos.firstChild){
-        TableDocumentos.removeChild(TableDocumentos.firstChild);
-    }
+    while (TableDocumentos.firstChild) {TableDocumentos.removeChild(TableDocumentos.firstChild); }
 
     let personName = "";
     
     documents.forEach(doc => {    
-        
-        if (doc.persons.length >0) 
-        {
-            personName = doc.persons[0].name;
-        }
+        personName = doc.persons.length >0 ? doc.persons[0].name : "";
 
         TableDocumentos.innerHTML += `
         <tr>
@@ -123,7 +113,7 @@ async function fillingDocTable(documents){
         <td>${personName}</td>
         <td>${doc.description}</td>
         <td>${doc.phisicalAddress}</td>
-        <td><center><a class="fa-solid fa-download" href="${doc.scanPath}"></a></td>
+        <td><center>${doc.scanPath === "" ? "" : `<a class="fa-solid fa-download" href="${doc.scanPath}"></a>`}</td>
         <td><center><button type="click" id="${doc.id}" data-btnDeleteDoc>X</button></td>
         </tr>
         `
@@ -156,15 +146,9 @@ async function SearchDocument(term){
     fillingDocTable(documentsRelevant);
 }
 
-async function AddPersonToDocument(idDoc, idPerson){
+async function AddPersonToDocument(idDoc, idPerson){    
 
     if (idPerson == 0 || idDoc == 0 ) return;
-
-    console.log(`
-    trying to add person to doc with ids
-    doc id: ${idDoc},
-    person id: ${idPerson}
-    `);
 
     const conexadoPersonToDoc = await fetch (endPointDocuments.AddPersonToDoc, 
     {        
@@ -178,10 +162,9 @@ async function AddPersonToDocument(idDoc, idPerson){
         })
     });
 
-    if (!conexadoPersonToDoc.ok){
-        throw new Error("Not able to add person to doc");
-    }
+    if (!conexadoPersonToDoc.ok) throw new Error("Not able to add person to doc");
 }
+
         
 export const docFunctions = {
     GetAllDocumentos,
