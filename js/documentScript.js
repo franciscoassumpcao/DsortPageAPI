@@ -21,12 +21,15 @@ async function GetAllDocumentos(){
    
 }
 
-function UpdateLatestPersonSelectedId(id) {latestCategorySelected = id; }
+async function UpdateLatestCategorySelectedId(id){
+    latestCategorySelected = id; 
+}
 
 async function PostNewDocument(docTitle, docDescription, file){        
     
     let tempScanPath = "";  
     let categoryIde = latestCategorySelected;  
+    console.log(`category ide is ${categoryIde}, and latestcategory selected is ${latestCategorySelected}`);
 
     if (file.files.length>0) {
         tempScanPath = (`https://dsortstorage.blob.core.windows.net/files/${file.files[0].name}`).toString();
@@ -46,12 +49,14 @@ async function PostNewDocument(docTitle, docDescription, file){
             CategoryId: categoryIde
         })
     });
+    
+    
 
     if (!conexadoNewDocument.ok) throw new Error("Não foi possível criar um novo documento");
 
     else {
-        const resonseDocJson = await conexadoNewDocument.json();  
-        latestDocumentCreatedId = resonseDocJson.id;        
+        const responseDocJson = await conexadoNewDocument.json();          
+        latestDocumentCreatedId = responseDocJson.id;        
 
         AddPersonToDocument(latestDocumentCreatedId,latestCategorySelected);
         GetAllDocumentos();
@@ -173,6 +178,6 @@ export const docFunctions = {
     DeleteDoc,
     SearchDocument,
     AddPersonToDocument,
-    UpdateLatestPersonSelectedId
+    UpdateLatestCategorySelectedId
 }
 

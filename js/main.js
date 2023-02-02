@@ -56,16 +56,17 @@ async function GetCategorySelectedInForm(){
         radiosCategories.forEach(radio => {
             if (radio.checked) {                
                 docFunctions.UpdateLatestCategorySelectedId(radio.id);
+                console.log(`calling 1 ${radio.id}`);
                 return; 
             }
-            else {
-                docFunctions.UpdateLatestCategorySelectedId(0);
+            else {                
+                console.log(`calling 2, with nothing`);
                 return;
             }
         })
     }
-        else { 
-            docFunctions.UpdateLatestCategorySelectedId(0);
+        else {             
+            console.log(`calling 3, with nothing`);
             return;
         }
 }
