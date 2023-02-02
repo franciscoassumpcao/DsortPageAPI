@@ -8,6 +8,7 @@ const formularioCreateNewPerson = document.querySelector("[data-formularioNewPer
 const formularioCreateNewDocument = document.querySelector("[data-formularioNewDoc]").addEventListener("submit", evento => CriarDocumento (evento));
 const formularioUpdatePerson = document.querySelector("[data-formularioUpdatePerson]").addEventListener("submit", evento => UpdatePerson(evento));
 const searchDocumentButton = document.querySelector("[data-btnsearchdocument]").addEventListener("click", evento => BuscarDoc(evento));
+const showAllDocumentsButton = document.querySelector("[data-btnshowAllDocuments]").addEventListener("click", evento => docFunctions.GetAllDocumentos());
 
 async function CriarPessoa(evento){
     evento.preventDefault();   

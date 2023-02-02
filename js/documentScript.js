@@ -17,8 +17,7 @@ async function GetAllDocumentos(){
     const conexaoAllDocuments = await fetch(endPointDocuments.GetAllDocuments);
     documents = await conexaoAllDocuments.json();   
     
-    fillingDocTable(documents);
-   
+    fillingDocTable(documents);   
 }
 
 async function UpdateLatestCategorySelectedId(id){
@@ -58,7 +57,8 @@ async function PostNewDocument(docTitle, docDescription, file){
         const responseDocJson = await conexadoNewDocument.json();          
         latestDocumentCreatedId = responseDocJson.id;        
 
-        AddPersonToDocument(latestDocumentCreatedId,latestCategorySelected).then(GetAllDocumentos());
+        await AddPersonToDocument(latestDocumentCreatedId,latestCategorySelected);
+        GetAllDocumentos();
     }    
     
 }
@@ -101,8 +101,6 @@ async function UploadScan(file){
    
 
 async function fillingDocTable(documents){
-
-    if (documents.length==0) return;
 
     while (TableDocumentos.firstChild) {TableDocumentos.removeChild(TableDocumentos.firstChild); }
 
@@ -153,7 +151,7 @@ async function SearchDocument(term){
 
 async function AddPersonToDocument(idDoc, idPerson){    
 
-    if (idPerson == 0 || idDoc == 0 ) return;
+    if (idPerson == 0 || idPerson == 98 || idPerson == 99 || idDoc == 0 ) return;    
 
     const conexadoPersonToDoc = await fetch (endPointDocuments.AddPersonToDoc, 
     {        
