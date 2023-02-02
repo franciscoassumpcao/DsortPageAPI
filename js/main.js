@@ -39,34 +39,34 @@ async function CriarDocumento(evento){
     const Description = document.querySelector("[data-docDescription]").value;
     const Address = document.querySelector("[data-docAddress]").value;
     const FileField = document.querySelector("[data-docScanPath]");          
-    await GetPersonSelectedInForm();
+    await GetCategorySelectedInForm();
 
     try {
-    await docFunctions.PostNewDocument(Title,Description,Address, FileField);        
+    await docFunctions.PostNewDocument(Title,Description, FileField);        
 
     } catch(e) {
         alert(e);
     }    
 }
 
-async function GetPersonSelectedInForm(){
+async function GetCategorySelectedInForm(){
 
-    let radiosPersons = document.querySelectorAll('input[name="checkBoxNames"]');
+    let radiosCategories = document.querySelectorAll('input[name="checkBoxNames"]');
 
-    if (radiosPersons.length>0) {        
-        radiosPersons.forEach(radio => {
+    if (radiosCategories.length>0) {        
+        radiosCategories.forEach(radio => {
             if (radio.checked) {                
-                docFunctions.UpdateLatestPersonSelectedId(radio.id);
+                docFunctions.UpdateLatestCategorySelectedId(radio.id);
                 return; 
             }
             else {
-                docFunctions.UpdateLatestPersonSelectedId(0);
+                docFunctions.UpdateLatestCategorySelectedId(0);
                 return;
             }
         })
     }
         else { 
-            docFunctions.UpdateLatestPersonSelectedId(0);
+            docFunctions.UpdateLatestCategorySelectedId(0);
             return;
         }
 }

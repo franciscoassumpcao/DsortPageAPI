@@ -93,7 +93,10 @@ while (parentCheckboxes.firstChild){
 }
 
 const conexao = await fetch(endPointPersons.GetAllPerson);
-const personsCurrent = await conexao.json();  
+const personsCurrent = await conexao.json(); 
+
+parentCheckboxes.innerHTML += `<div class="child"><input type="radio" name="checkBoxNames" id="98"> House |</div>`
+parentCheckboxes.innerHTML += `<div class="child"><input type="radio" name="checkBoxNames" id="99"> Other || PERSONS: </div>`
 
 await personsCurrent.forEach(pessoa => {
     parentCheckboxes.innerHTML +=

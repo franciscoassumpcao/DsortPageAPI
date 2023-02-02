@@ -11,7 +11,7 @@ const endPointDocuments = {
 
 let documents = [];
 var latestDocumentCreatedId = 0;
-var latestPersonSelectedId = 0;
+var latestCategorySelected = 0;
 
 async function GetAllDocumentos(){
     const conexaoAllDocuments = await fetch(endPointDocuments.GetAllDocuments);
@@ -21,11 +21,12 @@ async function GetAllDocumentos(){
    
 }
 
-function UpdateLatestPersonSelectedId(id) {latestPersonSelectedId = id; }
+function UpdateLatestPersonSelectedId(id) {latestCategorySelected = id; }
 
-async function PostNewDocument(docTitle, docDescription, docAddress, file){        
+async function PostNewDocument(docTitle, docDescription, file){        
     
-    let tempScanPath = "";
+    let tempScanPath = "";  
+    let categoryIde = latestCategorySelected;  
 
     if (file.files.length>0) {
         tempScanPath = (`https://dsortstorage.blob.core.windows.net/files/${file.files[0].name}`).toString();
@@ -42,7 +43,7 @@ async function PostNewDocument(docTitle, docDescription, docAddress, file){
             DocTitle: docTitle,
             ScanPath: tempScanPath,
             Description: docDescription,
-            PhisicalAddress: docAddress
+            CategoryId: categoryIde
         })
     });
 
@@ -52,7 +53,7 @@ async function PostNewDocument(docTitle, docDescription, docAddress, file){
         const resonseDocJson = await conexadoNewDocument.json();  
         latestDocumentCreatedId = resonseDocJson.id;        
 
-        AddPersonToDocument(latestDocumentCreatedId,latestPersonSelectedId);
+        AddPersonToDocument(latestDocumentCreatedId,latestCategorySelected);
         GetAllDocumentos();
     }    
     
