@@ -58,8 +58,7 @@ async function PostNewDocument(docTitle, docDescription, file){
         const responseDocJson = await conexadoNewDocument.json();          
         latestDocumentCreatedId = responseDocJson.id;        
 
-        AddPersonToDocument(latestDocumentCreatedId,latestCategorySelected);
-        GetAllDocumentos();
+        AddPersonToDocument(latestDocumentCreatedId,latestCategorySelected).then(GetAllDocumentos());
     }    
     
 }
